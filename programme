@@ -1,0 +1,95 @@
+#include <iostream>
+
+using namespace std;
+
+int metal = 0, diamonds = 0, deuter = 0;
+
+int ship_cost_metal = 20000;
+int ship_cost_diamonds = 7000;
+int ship_cost_deuter = 2000;
+
+char decision;
+
+int how_many_able()
+{
+    int met_possibility = metal/ship_cost_metal;
+    int dia_possibility = diamonds/ship_cost_diamonds;
+    int deu_possibility = deuter/ship_cost_deuter;
+
+    int how_many = met_possibility;
+
+    if(how_many > dia_possibility)
+        how_many = dia_possibility;
+    if(how_many > deu_possibility)
+        how_many = deu_possibility;
+
+    return how_many;
+
+}
+
+void buy()
+{
+    metal -= ship_cost_metal;
+    diamonds -= ship_cost_diamonds;
+    deuter -= ship_cost_deuter;
+
+    cout << "You've just bought a spaceship! Now your resources are: " << endl;
+
+    cout << "METAL:       " << metal << endl;
+    cout << "DIAMONDS:    " << diamonds << endl;
+    cout << "DEUTER:      " << deuter << endl;
+}
+
+void error()
+{
+    cout << "Something's wrong here...";
+}
+
+int main()
+{
+    cout << "The production of the spaceship costs:" << endl;
+    cout << "METAL:       " << ship_cost_metal << endl;
+    cout << "DIAMONDS:    " << ship_cost_diamonds << endl;
+    cout << "DEUTER:      " << ship_cost_deuter << endl << endl;
+
+    cout << "How much metal do you have?: ";
+    cin  >> metal;
+
+    cout << "How many diamonds do you have?: ";
+    cin  >> diamonds;
+
+    cout << "How much deuter do you have?: ";
+    cin  >> deuter;
+
+    if(metal < 0  || diamonds < 0  || deuter < 0)
+        error();
+    else
+    {
+        if(how_many_able() < 1)
+        {
+            cout << "You don't have enough resources. You need to earn:" << endl;
+
+
+            if(metal < ship_cost_metal)
+                cout << "METAL:       " << ship_cost_metal - metal << endl;
+
+            if(diamonds < ship_cost_diamonds)
+                cout << "DIAMONDS:    " << ship_cost_diamonds - diamonds << endl;
+
+            if(deuter < ship_cost_deuter)
+                cout << "DEUTER:      " << ship_cost_deuter - deuter << endl;
+        }
+
+        else
+        {
+            cout << "You can buy " << how_many_able() << " spaceships. Do you want to buy one?(y/n): ";
+            cin  >> decision;
+
+            if(decision == 'y' || decision == 'Y')
+                buy();
+        }
+
+    }
+
+    return 0;
+}
